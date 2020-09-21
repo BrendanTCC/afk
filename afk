@@ -25,6 +25,7 @@ echo "i refuse to continue until this is installed!"
 exit
 fi
 sleep 1
+clear
 printloc=/home/$USER/.afk/print.md
 fileloc=/home/$USER/print.pdf
 mkdir /home/$USER/.afk/
