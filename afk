@@ -1,4 +1,30 @@
 #!/bin/bash
+echo "dependency check:"
+pandoc=$(command -v pandoc)
+context=$(command -v context)
+qrencode=$(command -v qrencode)
+if [ "$pandoc" = "/usr/bin/pandoc" ]; then
+echo "pandoc: OK"
+else
+echo "pandoc: MISSING!"
+echo "i refuse to continue until this is installed!"
+exit
+fi
+if [ "$context" = "/usr/bin/context" ]; then
+echo "context: OK"
+else
+echo "context: MISSING!"
+echo "i refuse to continue until this is installed!"
+exit
+fi
+if [ "$qrencode" = "/usr/bin/qrencode" ]; then
+echo "qrencode: OK"
+else
+echo "qrencode: MISSING!"
+echo "i refuse to continue until this is installed!"
+exit
+fi
+sleep 1
 printloc=/home/$USER/.afk/print.md
 fileloc=/home/$USER/print.pdf
 mkdir /home/$USER/.afk/
@@ -9,6 +35,8 @@ echo "pronoun (he/she/they):"
 read pronoun
 echo "reason:"
 read reason
+echo "return time?"
+read rtime
 echo "tracker link:"
 read tlink
 echo "phone number:"
@@ -22,10 +50,17 @@ if [ -n "$phone" ]; then
 echo "tel:$phone" | qrencode -o phone.png
 fi
 echo "# $name isn't home at the moment." >> $printloc
-echo "$pronoun'll be back soon(ish)." >> $printloc
+if [ -n "$rtime" ]; then
+echo "$pronoun'll be back at about $rtime." >> $printloc
+fi
+if [ -z "$rtime" ]; then
+echo "$pronoun'll be back soon(ish)" >> $printloc
+fi
 echo "" >> $printloc
 echo "" >> $printloc
+if [ -n "$reason" ]; then
 echo "The reason $pronoun listed is: '$reason'" >> $printloc
+fi
 if [ -n "$tlink" ]; then
 echo "" >> $printloc
 echo "" >> $printloc
