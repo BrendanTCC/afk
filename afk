@@ -1,4 +1,5 @@
 #!/bin/bash
+uuid=$(echo -n "`date --iso-8601 | sed s/-//g`" && echo -n "`date +"%T" | sed s/://g`")
 echo "dependency check:"
 pandoc=$(command -v pandoc)
 context=$(command -v context)
@@ -26,8 +27,8 @@ exit
 fi
 sleep 1
 clear
-printloc=/home/$USER/.afk/print.md
-fileloc=/home/$USER/print.pdf
+printloc=/home/$USER/.afk/$uuid.md
+fileloc=/home/$USER/print-$uuid.pdf
 mkdir /home/$USER/.afk/
 cd /home/$USER/.afk
 echo "afk sign generator"
@@ -45,6 +46,8 @@ read tlink
 echo "phone number:"
 read phone
 clear
+echo "getting external files..."
+curl https://git.brendo.org/index.cgi/afk/plain/barcode.css > barcode.css
 echo "generating..."
 if [ -n "$tlink" ]; then
 echo "$tlink" | qrencode -o tlink.png
@@ -52,6 +55,8 @@ fi
 if [ -n "$phone" ]; then
 echo "tel:$phone" | qrencode -o phone.png
 fi
+echo $uuid | barcode -S -o id.svg id.png
+convert -size 1920x1080 id.svg id.png
 echo "# $name isn't home at the moment." >> $printloc
 if [ -n "$rtime" ]; then
 echo "$pronoun'll be back at about $rtime." >> $printloc
@@ -86,9 +91,12 @@ echo "" >> $printloc
 echo "### " >> $printloc
 echo "" >> $printloc
 echo "" >> $printloc
-printf "*Generated on: `date`, saved to $fileloc on system `hostname`, internal IP `hostname -I | cut -d' ' -f1`*" >> $printloc
+printf "*Generated on: `date --iso-8601` at `date +%T`, saved to $fileloc on system `hostname`, internal IP `hostname -I | cut -d' ' -f1`*" >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo '![internal use only!](id.png)' >> $printloc
 echo "exporting..."
-pandoc -o /home/$USER/print.pdf -f markdown -t context print.md
+pandoc -o $fileloc -f markdown --css barcode.css -t context $uuid.md
 if [ "$1" = "-p" ]; then
 echo "printing..."
 echo "(this command-line option created with the assistance of James Tomasino (gopher://gopher.black) - cheers mate! :D"
@@ -98,3 +106,4 @@ fi
 echo "cleaning up..."
 rm -rf /home/$USER/.afk/
 echo "done."
+echo "file saved to $fileloc."
