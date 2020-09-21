@@ -15,35 +15,40 @@ echo "phone number:"
 read phone
 clear
 echo "generating..."
+if [ -n "$tlink" ]; then
 echo "$tlink" | qrencode -o tlink.png
+fi
+if [ -n "$phone" ]; then
 echo "tel:$phone" | qrencode -o phone.png
-printf "generated on: `date`, saved to /home/$USER/print.docx on system `hostname`" | qrencode -o info.png
+fi
 echo "# $name isn't home at the moment." >> $printloc
 echo "$pronoun'll be back soon(ish)." >> $printloc
 echo "" >> $printloc
 echo "" >> $printloc
 echo "The reason $pronoun listed is: '$reason'" >> $printloc
+if [ -n "$tlink" ]; then
 echo "" >> $printloc
 echo "" >> $printloc
 echo "if you want to track $name, scan this:" >> $printloc
+
 echo "" >> $printloc
 echo "" >> $printloc
-echo '![tracking link](tlink.png "tlink")' >> $printloc
+echo '![tracking link](tlink.png "if you see this, then nothing was supplied.")' >> $printloc
+fi
+if [ -n "$phone" ]; then
 echo "" >> $printloc
 echo "" >> $printloc
 echo "if you wish to call or message $name, scan here:" >> $printloc
 echo "" >> $printloc
 echo "" >> $printloc
-echo '![phone number](phone.png "phone")' >> $printloc
+echo '![phone number](phone.png "qr code for phone number.")' >> $printloc
+fi
 echo "" >> $printloc
 echo "" >> $printloc
 echo "### " >> $printloc
 echo "" >> $printloc
 echo "" >> $printloc
-echo "more information about this file:" >> $printloc
-echo "" >> $printloc
-echo "" >> $printloc
-echo '![file info](info.png "file info")' >> $printloc
+printf "*Generated on: `date`, saved to $fileloc on system `hostname`, internal IP `hostname -I | cut -d' ' -f1`*" >> $printloc
 echo "exporting..."
 pandoc -o /home/$USER/print.pdf -f markdown -t context print.md
 if [ "$1" = "-p" ]; then
