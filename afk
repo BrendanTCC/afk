@@ -2,8 +2,11 @@
 uuid=$(echo -n "`date --iso-8601 | sed s/-//g`" && echo -n "`date +"%T" | sed s/://g`")
 echo "dependency check:"
 pandoc=$(command -v pandoc)
-context=$(command -v context)
+wkhtmltopdf=$(command -v wkhtmltopdf)
 qrencode=$(command -v qrencode)
+printloc=/home/$USER/.afk/$uuid.md
+fileloc=/home/$USER/print-$uuid.pdf
+log=/home/$USER/afk-$uuid.log
 if [ "$pandoc" = "/usr/bin/pandoc" ]; then
 echo "pandoc: OK"
 else
@@ -11,10 +14,10 @@ echo "pandoc: MISSING!"
 echo "i refuse to continue until this is installed!"
 exit
 fi
-if [ "$context" = "/usr/bin/context" ]; then
-echo "context: OK"
+if [ "$wkhtmltopdf" = "/usr/bin/wkhtmltopdf" ]; then
+echo "wkhtmltopdf: OK"
 else
-echo "context: MISSING!"
+echo "wkhtmltopdf: MISSING!"
 echo "i refuse to continue until this is installed!"
 exit
 fi
@@ -27,8 +30,6 @@ exit
 fi
 sleep 1
 clear
-printloc=/home/$USER/.afk/$uuid.md
-fileloc=/home/$USER/print-$uuid.pdf
 mkdir /home/$USER/.afk/
 cd /home/$USER/.afk
 echo "afk sign generator"
@@ -94,9 +95,9 @@ echo "" >> $printloc
 printf "*Generated on: `date --iso-8601` at `date +%T`, saved to $fileloc on system `hostname`, internal IP `hostname -I | cut -d' ' -f1`*" >> $printloc
 echo "" >> $printloc
 echo "" >> $printloc
-echo '![internal use only!](id.png)' >> $printloc
+echo '![internal use only!](id.png "internal use only!")' >> $printloc
 echo "exporting..."
-pandoc -o $fileloc -f markdown --css barcode.css -t context $uuid.md
+pandoc -t html --css barcode.css $uuid.md -o $fileloc --metadata pagetitle="made with afk sign generator" &> $log
 if [ "$1" = "-p" ]; then
 echo "printing..."
 echo "(this command-line option created with the assistance of James Tomasino (gopher://gopher.black) - cheers mate! :D"

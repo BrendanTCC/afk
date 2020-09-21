@@ -6,7 +6,7 @@
 
 - qrencode
 
-- pandoc (plus plugin `context` -- i found that on ubuntu (18.04 at least) it's available as package `context`)
+- pandoc (plus plugin `wkhtmltopdf` -- i found that on ubuntu (18.04 at least) it's available as package `wkhtmltopdf`)
 
 
 
