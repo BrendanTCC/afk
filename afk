@@ -1,0 +1,51 @@
+#!/bin/bash
+printloc=/home/$USER/.afk/print.md
+fileloc=/home/$USER/print.docx
+mkdir /home/$USER/.afk/
+cd /home/$USER/.afk
+echo "name:"
+read name
+echo "pronoun (he/she/they):"
+read pronoun
+echo "reason:"
+read reason
+echo "tracker link:"
+read tlink
+echo "phone number:"
+read phone
+clear
+echo "generating..."
+echo "$tlink" | qrencode -o tlink.png
+echo "tel:$phone" | qrencode -o phone.png
+printf "generated on: `date`, saved to /home/$USER/print.docx on system `hostname`" | qrencode -o info.png
+echo "# $name isn't home at the moment." >> $printloc
+echo "$pronoun'll be back soon(ish)." >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo "The reason $pronoun listed is: '$reason'" >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo "if you want to track $name, scan this:" >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo '![tracking link](tlink.png "tlink")' >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo "if you wish to call or message $name, scan here:" >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo '![phone number](phone.png "phone")' >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo "### " >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo "more information about this file:" >> $printloc
+echo "" >> $printloc
+echo "" >> $printloc
+echo '![file info](info.png "file info")' >> $printloc
+echo "exporting..."
+pandoc -o /home/$USER/print.docx -f markdown -t docx print.md
+echo "cleaning up..."
+rm -rf /home/$USER/.afk/
+echo "done."
