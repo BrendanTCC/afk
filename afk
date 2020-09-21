@@ -1,6 +1,6 @@
 #!/bin/bash
 printloc=/home/$USER/.afk/print.md
-fileloc=/home/$USER/print.docx
+fileloc=/home/$USER/print.pdf
 mkdir /home/$USER/.afk/
 cd /home/$USER/.afk
 echo "name:"
@@ -45,7 +45,13 @@ echo "" >> $printloc
 echo "" >> $printloc
 echo '![file info](info.png "file info")' >> $printloc
 echo "exporting..."
-pandoc -o /home/$USER/print.docx -f markdown -t docx print.md
+pandoc -o /home/$USER/print.pdf -f markdown -t context print.md
+if [ "$1" = "-p" ]; then
+echo "printing..."
+echo "(this command-line option created with the assistance of James Tomasino (gopher://gopher.black) - cheers mate! :D"
+echo "(this was wayy too easy xD)"
+lp $fileloc
+fi
 echo "cleaning up..."
 rm -rf /home/$USER/.afk/
 echo "done."
