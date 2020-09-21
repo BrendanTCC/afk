@@ -30,6 +30,8 @@ printloc=/home/$USER/.afk/print.md
 fileloc=/home/$USER/print.pdf
 mkdir /home/$USER/.afk/
 cd /home/$USER/.afk
+echo "afk sign generator"
+
 echo "name:"
 read name
 echo "pronoun (he/she/they):"
