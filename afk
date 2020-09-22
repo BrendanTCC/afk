@@ -33,21 +33,20 @@ clear
 mkdir /home/$USER/.afk/
 cd /home/$USER/.afk
 echo "afk sign generator"
-
+echo ""
 echo "name:"
 read name
 echo "pronoun (he/she/they):"
 read pronoun
-echo "reason:"
+echo "[OPTIONAL] reason:"
 read reason
-echo "return time?"
+echo "[OPTIONAL] return time?"
 read rtime
-echo "tracker link:"
+echo "[OPTIONAL] tracker link:"
 read tlink
-echo "phone number:"
+echo "[OPTIONAL] phone number:"
 read phone
 clear
-echo "getting external files..."
 echo "generating..."
 if [ -n "$tlink" ]; then
 echo "$tlink" | qrencode -o tlink.png
@@ -55,12 +54,12 @@ fi
 if [ -n "$phone" ]; then
 echo "tel:$phone" | qrencode -o phone.png
 fi
-echo "# $name isn't home at the moment." >> $printloc
+echo "# $name isn't available at the moment." >> $printloc
 if [ -n "$rtime" ]; then
 echo "$pronoun'll be back at about $rtime." >> $printloc
 fi
 if [ -z "$rtime" ]; then
-echo "$pronoun'll be back soon(ish)" >> $printloc
+echo "$pronoun'll be back later." >> $printloc
 fi
 echo "" >> $printloc
 echo "" >> $printloc
