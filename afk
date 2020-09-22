@@ -34,17 +34,17 @@ mkdir /home/$USER/.afk/
 cd /home/$USER/.afk
 echo "afk sign generator"
 echo ""
-echo "name:"
+echo -n "name: "
 read name
-echo "pronoun (he/she/they):"
+echo -n "pronoun (he/she/they): "
 read pronoun
-echo "[OPTIONAL] reason:"
+echo -n "[OPTIONAL] reason: "
 read reason
-echo "[OPTIONAL] return time?"
+echo -n "[OPTIONAL] return time? "
 read rtime
-echo "[OPTIONAL] tracker link:"
+echo -n "[OPTIONAL] tracker link: "
 read tlink
-echo "[OPTIONAL] phone number:"
+echo -n "[OPTIONAL] phone number: "
 read phone
 clear
 echo "generating..."
@@ -91,9 +91,9 @@ echo "" >> $printloc
 printf "*Generated on: `date --iso-8601` at `date +%T`, saved to $fileloc on system `hostname`, internal IP `hostname -I | cut -d' ' -f1`*" >> $printloc
 echo "" >> $printloc
 echo "" >> $printloc
-echo '![internal use only!](id.png "internal use only!")' >> $printloc
-echo "exporting..."
+echo -n "exporting... ["
 pandoc -t html $uuid.md -o $fileloc --metadata pagetitle="made with afk sign generator" &> $log
+echo "exported to $fileloc!]"
 if [ "$1" = "-p" ]; then
 echo "printing..."
 echo "(this command-line option created with the assistance of James Tomasino (gopher://gopher.black) - cheers mate! :D"
@@ -103,4 +103,3 @@ fi
 echo "cleaning up..."
 rm -rf /home/$USER/.afk/
 echo "done."
-echo "file saved to $fileloc."
