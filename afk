@@ -48,7 +48,6 @@ echo "phone number:"
 read phone
 clear
 echo "getting external files..."
-curl https://git.brendo.org/index.cgi/afk/plain/barcode.css > barcode.css
 echo "generating..."
 if [ -n "$tlink" ]; then
 echo "$tlink" | qrencode -o tlink.png
@@ -56,8 +55,6 @@ fi
 if [ -n "$phone" ]; then
 echo "tel:$phone" | qrencode -o phone.png
 fi
-echo $uuid | barcode -S -o id.svg id.png
-convert -size 1920x1080 id.svg id.png
 echo "# $name isn't home at the moment." >> $printloc
 if [ -n "$rtime" ]; then
 echo "$pronoun'll be back at about $rtime." >> $printloc
@@ -97,7 +94,7 @@ echo "" >> $printloc
 echo "" >> $printloc
 echo '![internal use only!](id.png "internal use only!")' >> $printloc
 echo "exporting..."
-pandoc -t html --css barcode.css $uuid.md -o $fileloc --metadata pagetitle="made with afk sign generator" &> $log
+pandoc -t html $uuid.md -o $fileloc --metadata pagetitle="made with afk sign generator" &> $log
 if [ "$1" = "-p" ]; then
 echo "printing..."
 echo "(this command-line option created with the assistance of James Tomasino (gopher://gopher.black) - cheers mate! :D"
