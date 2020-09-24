@@ -1,10 +1,13 @@
 #!/bin/bash
 # emergency trap, hopefully?
+stty -echoctl
 trap ctrl_c INT
 
 function ctrl_c() {
-        rm -rf /home/$USER/.afk/
-        exit
+	rm -rf /home/$USER/.afk/
+	clear
+	echo "clean-up complete. over to you, $USER."
+	exit
 }
 uuid=$(echo -n "`date --iso-8601 | sed s/-//g`" && echo -n "`date +"%T" | sed s/://g`")
 echo "dependency check:"
