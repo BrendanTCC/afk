@@ -1,4 +1,10 @@
 #!/bin/bash
+COMMIT_VER='13'
+if [ "$1" = "-v" ]; then
+echo "afk sign generator"
+echo "commit version: $COMMIT_VER"
+exit
+fi
 # emergency trap, hopefully?
 stty -echoctl
 trap ctrl_c INT
@@ -110,6 +116,4 @@ echo "(this command-line option created with the assistance of James Tomasino (g
 echo "(this was wayy too easy xD)"
 lp $fileloc
 fi
-echo "cleaning up..."
-rm -rf /home/$USER/.afk/
-echo "done."
+ctrl_c
