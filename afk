@@ -13,6 +13,12 @@ function ctrl_c() {
 	rm -rf /home/$USER/.afk/
 	clear
 	echo "clean-up complete. over to you, $USER."
+	if [ "$printed" = "true" ]; then
+	echo "the sign should now be printing."	
+	fi
+	if [ "$printed" = "true" ]; then
+	echo "saved to $fileloc."	
+	fi
 	exit
 }
 uuid=$(echo -n "`date --iso-8601 | sed s/-//g`" && echo -n "`date +"%T" | sed s/://g`")
@@ -107,13 +113,14 @@ echo "" >> $printloc
 printf "*Generated on: `date --iso-8601` at `date +%T`, saved to $fileloc on system `hostname`, internal IP `hostname -I | cut -d' ' -f1`*" >> $printloc
 echo "" >> $printloc
 echo "" >> $printloc
-echo -n "exporting... ["
+echo -n "exporting..."
 pandoc -t html $uuid.md -o $fileloc --metadata pagetitle="made with afk sign generator" &> $log
-echo "exported to $fileloc!]"
+saved="true"
 if [ "$1" = "-p" ]; then
 echo "printing..."
 echo "(this command-line option created with the assistance of James Tomasino (gopher://gopher.black) - cheers mate! :D"
 echo "(this was wayy too easy xD)"
 lp $fileloc
+printed="true"
 fi
 ctrl_c
