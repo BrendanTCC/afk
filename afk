@@ -16,7 +16,7 @@ function ctrl_c() {
 	if [ "$printed" = "true" ]; then
 	echo "the sign should now be printing."	
 	fi
-	if [ "$printed" = "true" ]; then
+	if [ "$saved" = "true" ]; then
 	echo "saved to $fileloc."	
 	fi
 	exit
