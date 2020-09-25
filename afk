@@ -1,5 +1,5 @@
 #!/bin/bash
-COMMIT_VER='13'
+COMMIT_VER='15'
 if [ "$1" = "-v" ]; then
 echo "afk sign generator"
 echo "commit version: $COMMIT_VER"
