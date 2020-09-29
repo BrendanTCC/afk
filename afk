@@ -1,5 +1,5 @@
 #!/bin/bash
-COMMIT_VER='15'
+COMMIT_VER='16'
 if [ "$1" = "-v" ]; then
 echo "afk sign generator"
 echo "commit version: $COMMIT_VER"
@@ -7,9 +7,9 @@ exit
 fi
 # emergency trap, hopefully?
 stty -echoctl
-trap ctrl_c INT
+trap quit INT
 
-function ctrl_c() {
+function quit() {
 	rm -rf /home/$USER/.afk/
 	clear
 	echo "clean-up complete. over to you, $USER."
@@ -123,4 +123,4 @@ echo "(this was wayy too easy xD)"
 lp $fileloc
 printed="true"
 fi
-ctrl_c
+quit
