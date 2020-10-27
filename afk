@@ -1,6 +1,16 @@
 #!/bin/bash
-COMMIT_VER='17'
-
+function help() {
+	echo "afk sign generator by Brendan Webb"
+	echo "commit number $COMMIT_VER"
+	echo ""
+	echo "-v -- yeets u the version number"
+	echo "-p -- tells me to also print to default printer (using lp)"
+	echo "-h -- tells me you don't know how to use me, so i can tell you"
+}
+COMMIT_VER='18'
+if [ "$1" = "-h" ]; then
+help
+fi
 # version output
 if [ "$1" = "-v" ]; then
 echo "afk sign generator"
