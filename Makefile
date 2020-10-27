@@ -1,3 +1,4 @@
+# thanks to Case Duckworth [acdw] for the template :)
 install:
 	@sudo install afk /bin/afk
 	@echo "what are you talkin' about, i totally didn't just use sudo!"

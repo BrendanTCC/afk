@@ -14,7 +14,7 @@
 
 make sure prerequisites are installed, then drop the script into your PATH (i personally have it in `/bin/afk`).
 
-From there, just run `afk` (or `./afk` if you didn't bother to throw the script into your PATH but happen to be in the same dir as it),
+`make install` to install; `make yeet` to, uhhh, uninstall.
 
 fill out the name, pronoun, reason, return time, tracking link (if you made one), and phone number, then let the script do the rest.
 
