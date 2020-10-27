@@ -1,0 +1,8 @@
+#!/bin/bash
+apt=$(command -v apt)
+
+if [ "$apt" = "/usr/bin/apt " ]; then
+sudo apt install pandoc wkhtmltopdf qrencode
+else
+echo "an error occured: package manager 'apt' not found in expected location"
+fi

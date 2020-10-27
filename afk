@@ -7,7 +7,7 @@ function help() {
 	echo "-p -- tells me to also print to default printer (using lp)"
 	echo "-h OR --help -- tells me you don't know how to use me, so i can tell you"
 }
-COMMIT_VER='20'
+COMMIT_VER='21'
 if [ "$1" = "-h" ]; then
 help
 exit
