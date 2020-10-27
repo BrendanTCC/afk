@@ -5,11 +5,16 @@ function help() {
 	echo ""
 	echo "-v -- yeets u the version number"
 	echo "-p -- tells me to also print to default printer (using lp)"
-	echo "-h -- tells me you don't know how to use me, so i can tell you"
+	echo "-h OR --help -- tells me you don't know how to use me, so i can tell you"
 }
-COMMIT_VER='18'
+COMMIT_VER='20'
 if [ "$1" = "-h" ]; then
 help
+exit
+fi
+if [ "$1" = "--help"; then
+help
+exit
 fi
 # version output
 if [ "$1" = "-v" ]; then
