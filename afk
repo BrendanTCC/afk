@@ -1,21 +1,49 @@
 #!/bin/bash
+<<<<<<< HEAD
 COMMIT_VER='17'
+=======
+function help() {
+	echo "afk sign generator by Brendan Webb"
+	echo "commit number $COMMIT_VER"
+	echo ""
+	echo "-v -- yeets u the version number"
+	echo "-p -- tells me to also print to default printer (using lp)"
+	echo "-h OR --help -- tells me you don't know how to use me, so i can tell you"
+}
+COMMIT_VER='25'
+if [ "$1" = "-h" ]; then
+help
+exit
+fi
+if [ "$1" = "--help"; then
+help
+exit
+fi
+# version output
+>>>>>>> 82dca0e87797657152cae4ea714a12ebf0c48a29
 if [ "$1" = "-v" ]; then
 echo "afk sign generator"
 echo "commit version: $COMMIT_VER"
 exit
 fi
+
 # emergency trap, hopefully?
 stty -echoctl
 trap quit INT
 
+# exit function
 function quit() {
+	# cleanup
 	rm -rf /home/$USER/.afk/
 	clear
+	# let the user know that the cleanup is complete.
 	echo "clean-up complete. over to you, $USER."
+	# if we're far enough down the script, and the user called the -p option,
+	# we let the user know that their document is printing."
 	if [ "$printed" = "true" ]; then
 	echo "the sign should now be printing."	
 	fi
+	# if the document was successfully exported, then we let the user know where it is.
 	if [ "$saved" = "true" ]; then
 	echo "saved to $fileloc."	
 	fi
@@ -24,14 +52,21 @@ function quit() {
 	fi
 	exit
 }
+
+# semi-unnecessary variables, but they're used later soo...
 uuid=$(echo -n "`date --iso-8601 | sed s/-//g`" && echo -n "`date +"%T" | sed s/://g`")
 echo "dependency check:"
+# literally checking to see that dependencies are there
 pandoc=$(command -v pandoc)
 wkhtmltopdf=$(command -v wkhtmltopdf)
 qrencode=$(command -v qrencode)
+# for writing up the template
 printloc=/home/$USER/.afk/$uuid.md
+# for exporting the template into a pdf file.
 fileloc=/home/$USER/print-$uuid.pdf
+# logging location variable (because lazy)
 log=/home/$USER/afk-$uuid.log
+# here's the dependency check:
 if [ "$pandoc" = "/usr/bin/pandoc" ]; then
 echo "pandoc: OK"
 else
@@ -55,8 +90,10 @@ exit
 fi
 sleep 1
 clear
+# create and head into our lil tmp directory (i'm too foolish to use /tmp/, dang it)
 mkdir /home/$USER/.afk/
 cd /home/$USER/.afk
+# f i n a l l y, the f**kin' important stuff
 echo "afk sign generator"
 echo ""
 echo -n "name: "
@@ -72,6 +109,7 @@ read tlink
 echo -n "[OPTIONAL] phone number: "
 read phone
 clear
+# generate necessary qr codes if relevant menu items were filled in
 echo "generating..."
 if [ -n "$tlink" ]; then
 echo "$tlink" | qrencode -o tlink.png
@@ -79,6 +117,7 @@ fi
 if [ -n "$phone" ]; then
 echo "tel:$phone" | qrencode -o phone.png
 fi
+# writing the template
 echo "# $name isn't available at the moment." >> $printloc
 if [ -n "$rtime" ]; then
 echo "$pronoun'll be back at about $rtime." >> $printloc
@@ -117,6 +156,7 @@ printf "*Generated on: `date --iso-8601` at `date +%T`, saved to $fileloc on sys
 echo "" >> $printloc
 echo "" >> $printloc
 echo -n "exporting..."
+<<<<<<< HEAD
 if [ "$USER" = "aewens" ]; then
 sleep 10
 echo ""
@@ -135,8 +175,12 @@ quit
 fi
 fi
 fi
+=======
+# turning our lil template into a final pdf file, then writing to a variable to confirm.
+>>>>>>> 82dca0e87797657152cae4ea714a12ebf0c48a29
 pandoc -t html $uuid.md -o $fileloc --metadata pagetitle="made with afk sign generator" &> $log
 saved="true"
+# if the "-p" option is called with the command, then it will print to the *default printer*.
 if [ "$1" = "-p" ]; then
 echo "printing..."
 echo "(this command-line option created with the assistance of James Tomasino (gopher://gopher.black) - cheers mate! :D"
@@ -144,4 +188,5 @@ echo "(this was wayy too easy xD)"
 lp $fileloc
 printed="true"
 fi
+# aaaand finally, calling the function that we created at the start of the script.
 quit

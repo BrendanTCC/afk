@@ -14,7 +14,9 @@
 
 make sure prerequisites are installed, then drop the script into your PATH (i personally have it in `/bin/afk`).
 
-From there, just run `afk` (or `./afk` if you didn't bother to throw the script into your PATH but happen to be in the same dir as it),
+`make install` to install; `make yeet` to, uhhh, uninstall.
+
+if you're too damn lazy to just use your package manager to install the deps, and you happen to be on Ubuntu (or debian? can't confirm), just run the setup script.
 
 fill out the name, pronoun, reason, return time, tracking link (if you made one), and phone number, then let the script do the rest.
 
