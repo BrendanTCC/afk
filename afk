@@ -1,6 +1,6 @@
 #!/bin/bash
 <<<<<<< HEAD
-COMMIT_VER='17'
+COMMIT_VER='18'
 =======
 function help() {
 	echo "afk sign generator by Brendan Webb"
