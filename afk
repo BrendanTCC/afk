@@ -1,5 +1,5 @@
 #!/bin/bash
-COMMIT_VER='19'
+COMMIT_VER='26'
 function help() {
 	echo "afk sign generator by Brendan Webb"
 	echo "commit number $COMMIT_VER"
@@ -8,7 +8,6 @@ function help() {
 	echo "-p -- tells me to also print to default printer (using lp)"
 	echo "-h OR --help -- tells me you don't know how to use me, so i can tell you"
 }
-COMMIT_VER='25'
 if [ "$1" = "-h" ]; then
 help
 exit
